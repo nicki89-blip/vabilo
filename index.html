@@ -67,7 +67,7 @@ body {
   width: min(330px, 70%); margin: -44px auto 0; background: var(--panel);
   padding: 22px 16px 14px; text-align: center; display: grid; gap: 10px; justify-items: center;
 }
-.emblem { width: 64px; height: 76px; }
+.emblem { width: 140px; height: auto; display: block; }
 .issuer { font-family: var(--font-label); letter-spacing: .16em; font-size: .78rem; color: var(--label); }
 
 .body { padding-inline: clamp(14px, 5vw, 44px); display: grid; gap: 18px; margin-top: 18px; }
@@ -200,12 +200,7 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   <article class="sheet" aria-label="Vabilo na praznovanje 40. rojstnega dne">
     <div class="topband"></div>
     <div class="panel">
-      <svg class="emblem" viewBox="0 0 64 76" aria-hidden="true">
-        <path d="M4 4 H60 V40 C60 58 46 68 32 73 C18 68 4 58 4 40 Z" fill="#3a2a33"/>
-        <path d="M9 9 H55 V40 C55 54 44 62 32 67 C20 62 9 54 9 40 Z" fill="#eef8f9"/>
-        <text x="32" y="48" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="600" font-size="30" fill="#3a2a33">40</text>
-        <path d="M14 56 Q23 52 32 56 T50 56" stroke="#3a2a33" stroke-width="2" fill="none"/>
-      </svg>
+      <img class="emblem" src="emblem.png" alt="" width="140" height="92">
       <div class="issuer">OSNOVNA ŠOLA ŽIVLJENJA</div>
     </div>
 
