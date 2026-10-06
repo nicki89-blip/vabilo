@@ -121,7 +121,7 @@ function setup() {
   var pov = ss.getSheetByName(SHEET_POVZETEK) || ss.insertSheet(SHEET_POVZETEK, 1);
   pov.clear();
   var sep = separator_(pov);
-  pov.getRange("A1").setValue("Povzetek potrditev (velja zadnji odgovor po imenu)").setFontWeight("bold").setFontSize(13);
+  pov.getRange("A1").setValue("Povzetek potrditev (velja zadnji odgovor vsakega para)").setFontWeight("bold").setFontSize(13);
   pov.getRange("A3:A7").setValues([
     ["Skupaj oseb, ki pridejo"],
     ["Gospodinjstva, ki pridejo"],
