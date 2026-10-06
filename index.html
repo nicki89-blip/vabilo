@@ -265,27 +265,24 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
     </div>
 
     <div id="formWrap">
-      <p>Izpolni in pošlji. Potrdi <span class="deadline">do 31. oktobra 2026</span>, da bo dovolj hrane za vse.</p>
+      <p>Izpolnita in pošljita. Potrdita <span class="deadline">do 31. oktobra 2026</span>, da bo dovolj hrane za vse.</p>
 
       <form id="rsvp" novalidate>
-        <label class="q" for="ime"><span>ime in priimek</span>
-          <input type="text" id="ime" autocomplete="name" placeholder="Tvoje ime" maxlength="80" required>
+        <label class="q" for="ime"><span>vajini imeni</span>
+          <input type="text" id="ime" autocomplete="off" placeholder="npr. Ana in Marko Novak" maxlength="80" required>
         </label>
 
         <fieldset class="q">
           <legend>udeležba</legend>
           <div class="opts">
-            <label class="opt"><input type="radio" name="pride" id="pride-da" value="da" checked> Pridem</label>
-            <label class="opt"><input type="radio" name="pride" id="pride-ne" value="ne"> Žal ne morem</label>
+            <label class="opt"><input type="radio" name="pride" id="pride-2" value="2" checked> Prideva oba</label>
+            <label class="opt"><input type="radio" name="pride" id="pride-1" value="1"> Pride samo eden</label>
+            <label class="opt"><input type="radio" name="pride" id="pride-0" value="0"> Žal ne moreva</label>
           </div>
         </fieldset>
 
-        <label class="q" for="stevilo" id="stevilo-wrap"><span>število odraslih oseb (s tabo vred)</span>
-          <input type="number" id="stevilo" min="1" max="10" value="1" inputmode="numeric">
-        </label>
-
         <fieldset class="q" id="prenocisce-wrap">
-          <legend>potrebuješ prenočišče?</legend>
+          <legend>potrebujeta prenočišče?</legend>
           <div class="opts">
             <label class="opt"><input type="radio" name="spanje" id="spanje-ne" value="ne" checked> Ne</label>
             <label class="opt"><input type="radio" name="spanje" id="spanje-da" value="da"> Da</label>
@@ -293,7 +290,7 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
         </fieldset>
 
         <label class="q" for="opomba"><span>opombe (neobvezno)</span>
-          <textarea id="opomba" placeholder="Komaj čakam!" maxlength="500"></textarea>
+          <textarea id="opomba" placeholder="Komaj čakava!" maxlength="500"></textarea>
           <span class="count" id="opombaCount" aria-live="polite">0/500</span>
         </label>
 
@@ -350,9 +347,7 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
     if (el) el.checked = true;
   }
   function syncVisibility() {
-    var coming = val("pride") === "da";
-    $("stevilo-wrap").hidden = !coming;
-    $("prenocisce-wrap").hidden = !coming;
+    $("prenocisce-wrap").hidden = val("pride") === "0";
   }
   form.addEventListener("change", syncVisibility);
   syncVisibility();
@@ -360,13 +355,6 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   $("opomba").addEventListener("input", function () {
     $("opombaCount").textContent = this.value.length + "/500";
   });
-
-  function osebe(n) {
-    if (n === 1) return "1 oseba";
-    if (n === 2) return "2 osebi";
-    if (n === 3 || n === 4) return n + " osebe";
-    return n + " oseb";
-  }
 
   function load() {
     try { return JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (x) { return null; }
@@ -376,10 +364,9 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   }
 
   function collect() {
-    var coming = val("pride") === "da";
-    var n = parseInt($("stevilo").value, 10);
-    if (!(n >= 1)) n = 1;
-    if (n > 10) n = 10;
+    var n = parseInt(val("pride"), 10);
+    if (n !== 1 && n !== 0) n = 2;
+    var coming = n > 0;
     return {
       ime: $("ime").value.trim(),
       udelezba: coming ? "da" : "ne",
@@ -392,24 +379,24 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   }
 
   function validate(d) {
-    if (!d.ime) return { el: "ime", text: "Vpiši svoje ime, da bo Nino vedel, kdo prihaja." };
-    if (d.ime.length > 80) return { el: "ime", text: "Ime je predolgo (največ 80 znakov)." };
+    if (!d.ime) return { el: "ime", text: "Vpišita svoji imeni, da bo Nino vedel, kdo prihaja." };
+    if (d.ime.length > 80) return { el: "ime", text: "Vnos je predolg (največ 80 znakov)." };
     if (d.opombe.length > 500) return { el: "opomba", text: "Opombe so predolge (največ 500 znakov)." };
     return null;
   }
 
   function summary(d) {
-    if (d.udelezba !== "da") return d.ime + ": žal ne more priti";
-    return d.ime + ": pride, " + osebe(d.stevilo) + (d.prenocisce === "da" ? ", s prenočiščem" : "");
+    if (d.udelezba !== "da") return d.ime + ": žal ne moreta priti";
+    return d.ime + ": " + (d.stevilo === 1 ? "pride samo eden" : "prideta oba") + (d.prenocisce === "da" ? ", s prenočiščem" : "");
   }
 
   function messageText(d) {
-    var lines = ["Živjo Nino, potrdilo za 40-letnico (14. 11., Štumfabrika):", "Ime: " + d.ime];
+    var lines = ["Živjo Nino, potrdilo za 40-letnico (14. 11., Štumfabrika):", "Imeni: " + d.ime];
     if (d.udelezba === "da") {
-      lines.push("Udeležba: pridem, " + osebe(d.stevilo));
-      lines.push("Prenočišče: " + (d.prenocisce === "da" ? "da, potrebujem" : "ne"));
+      lines.push("Udeležba: " + (d.stevilo === 1 ? "pride samo eden" : "prideva oba"));
+      lines.push("Prenočišče: " + (d.prenocisce === "da" ? "da, potrebujeva" : "ne"));
     } else {
-      lines.push("Udeležba: žal ne morem priti");
+      lines.push("Udeležba: žal ne moreva priti");
     }
     if (d.opombe) lines.push("Opombe: " + d.opombe);
     return lines.join("\n");
@@ -435,8 +422,7 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
 
   function fill(d) {
     $("ime").value = d.ime || "";
-    check("pride", d.udelezba === "ne" ? "ne" : "da");
-    $("stevilo").value = d.stevilo >= 1 ? d.stevilo : 1;
+    check("pride", d.udelezba === "ne" ? "0" : (d.stevilo === 1 ? "1" : "2"));
     check("spanje", d.prenocisce === "da" ? "da" : "ne");
     $("opomba").value = d.opombe || "";
     $("opombaCount").textContent = $("opomba").value.length + "/500";
