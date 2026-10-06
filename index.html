@@ -178,7 +178,6 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
 .done { display: grid; gap: 14px; justify-items: start; }
 .done-row { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
 .done .stamp { width: 92px; height: 92px; }
-.done .stamp b { font-size: 1.25rem; letter-spacing: .04em; }
 .done-title { margin: 0; font-family: var(--font-title); font-weight: 600; color: var(--title); font-size: 1.6rem; line-height: 1.15; }
 .done .f { width: 100%; }
 .linkbtn { appearance: none; background: none; border: 0; padding: 0; cursor: pointer; font: 500 .95rem var(--font-label); color: var(--title); text-decoration: underline; text-underline-offset: 4px; }
@@ -257,7 +256,7 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
 
     <div class="done" id="done" hidden tabindex="-1">
       <div class="done-row">
-        <div class="stamp" aria-hidden="true"><span>OŠ ŽIVLJENJA<b id="doneStamp">PREJETO</b>40. RAZRED</span></div>
+        <img class="stamp stamp-img" src="stamp-ninotova.png" alt="" width="92" height="92">
         <p class="done-title" id="doneTitle"></p>
       </div>
       <div class="f"><div class="v" id="doneSummary"></div><div class="l">tvoj odgovor</div></div>
@@ -405,7 +404,6 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   function showDone(d, moveFocus) {
     var coming = d.udelezba === "da";
     $("doneTitle").textContent = coming ? "Potrdilo prejeto. Se vidimo 14. novembra!" : "Škoda, hvala za odgovor.";
-    $("doneStamp").textContent = coming ? "PRIDE" : "PREJETO";
     $("doneSummary").textContent = summary(d);
     formWrap.hidden = true;
     done.hidden = false;
