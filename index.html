@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="sl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spričevalo 40. razreda</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Sobota, 14. 11. 2026, ob 19.00, Štumfabrika Polzela">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vabilo na Ninovo 40-letnico">
+<meta property="og:description" content="Sobota, 14. 11. 2026, ob 19.00, Štumfabrika Polzela">
+<meta property="og:url" content="https://nicki89-blip.github.io/nino40/">
+<meta property="og:image" content="https://nicki89-blip.github.io/nino40/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="sl_SI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#3d4a4c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Jost:wght@400;500&family=Arimo:wght@400;700&family=Caveat:wght@600&display=swap">
+<style>
+/* Layout: the Slovenian primary-school report card (spričevalo) recreated: pale security paper, grey top band, field bands with chevrons and small labels under them, teal grade block with hatched value pills; RSVP as a matching tear-off slip. Deliberate single paper look. */
+:root {
+  color-scheme: light;
+  --desk: #3d4a4c;
+  --paper: #eef8f9;
+  --band: #d4e6e8;
+  --band-dark: #a9c7cb;
+  --panel: #c9dfe2;
+  --grades: #b5d1d5;
+  --pill: #e6f2f3;
+  --ink: #1f2324;
+  --label: #5c7276;
+  --label-soft: #8fb0b5;
+  --title: #3a2a33;
+  --pen: #2a4fa8;
+  --stamp: #7f8f93;
+  --font-title: "Cormorant Garamond", "Georgia", serif;
+  --font-label: "Jost", "Futura", "Century Gothic", sans-serif;
+  --font-value: "Arimo", "Arial", "Helvetica", sans-serif;
+  --font-hand: "Caveat", "Segoe Script", cursive;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--font-value);
+  font-size: 16px;
+  line-height: 1.45;
+  padding-inline: 16px;
+  padding-block: 24px 48px;
+}
+.wrap { max-width: 720px; margin: 0 auto; display: grid; gap: 32px; }
+
+.sheet {
+  position: relative; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 15% 30%, rgba(169,199,203,.25), transparent 55%),
+    radial-gradient(ellipse at 85% 75%, rgba(169,199,203,.2), transparent 50%),
+    var(--paper);
+  box-shadow: 0 18px 44px rgba(0,0,0,.4);
+  padding-bottom: 28px;
+}
+.topband { height: 22px; background: var(--band-dark); margin-top: 22px; }
+.panel {
+  width: min(330px, 70%); margin: -44px auto 0; background: var(--panel);
+  padding: 22px 16px 14px; text-align: center; display: grid; gap: 10px; justify-items: center;
+}
+.emblem { width: 64px; height: 76px; }
+.issuer { font-family: var(--font-label); letter-spacing: .16em; font-size: .78rem; color: var(--label); }
+
+.body { padding-inline: clamp(14px, 5vw, 44px); display: grid; gap: 18px; margin-top: 18px; }
+
+.f { display: grid; gap: 2px; min-width: 0; }
+.f .v {
+  position: relative;
+  background: linear-gradient(90deg, transparent, var(--band) 12%, var(--band) 92%, transparent);
+  padding: 4px 10px 4px 26px; font-weight: 700; min-height: 1.9em; min-width: 0; overflow-wrap: anywhere;
+}
+.f .v::before {
+  content: ""; position: absolute; left: 6px; top: 50%; width: 9px; height: 18px;
+  border-right: 1.5px solid var(--label-soft); border-top: 1.5px solid transparent;
+  transform: translateY(-50%) skewX(18deg);
+}
+.f .l { font-family: var(--font-label); font-size: .78rem; color: var(--label); padding-left: 26px; }
+.f.center .v { text-align: center; }
+.row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+
+h1 {
+  margin: 4px 0 0; text-align: center; font-family: var(--font-title); font-weight: 600;
+  color: var(--title); font-size: clamp(2.8rem, 11vw, 4.2rem); line-height: 1;
+}
+h1 .cap { font-size: 1.45em; line-height: .7; }
+.subtitle { margin: 0; text-align: center; font-family: var(--font-label); letter-spacing: .14em; font-size: clamp(.95rem, 3.4vw, 1.25rem); color: var(--ink); }
+.name .v { font-size: 1.35rem; }
+
+.gh { margin: 8px 0 0; font-family: var(--font-label); font-weight: 400; letter-spacing: .14em; font-size: clamp(1rem, 3.6vw, 1.3rem); }
+.grades {
+  margin-inline: calc(-1 * clamp(14px, 5vw, 44px));
+  background: var(--grades); padding: 16px clamp(14px, 5vw, 44px);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px 28px;
+}
+.g { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); align-items: center; gap: 10px; }
+.g .s { font-family: var(--font-label); color: #f4fafb; font-size: .98rem; line-height: 1.15; }
+.g .p {
+  text-align: center; padding: 3px 8px; font-size: .98rem;
+  background:
+    repeating-linear-gradient(60deg, transparent 0 3px, rgba(169,199,203,.5) 3px 4px),
+    repeating-linear-gradient(-60deg, transparent 0 3px, rgba(169,199,203,.5) 3px 4px),
+    var(--pill);
+  clip-path: polygon(4% 0, 96% 0, 100% 50%, 96% 100%, 4% 100%, 0 50%);
+}
+.verdict { text-align: center; font-family: var(--font-label); font-weight: 500; font-size: clamp(1.05rem, 3.8vw, 1.3rem); margin: 6px 0; }
+.verdict u { text-underline-offset: 5px; }
+
+.event { display: grid; gap: 14px; }
+.row2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn {
+  appearance: none; cursor: pointer; text-decoration: none;
+  font: 500 .95rem var(--font-label); letter-spacing: .04em;
+  padding: 10px 16px; border: 1.5px solid var(--title); background: transparent; color: var(--title);
+}
+.btn.primary, .btn:hover { background: var(--title); color: var(--paper); }
+.btn:focus-visible, input:focus-visible, textarea:focus-visible, label.opt:focus-within { outline: 3px solid var(--pen); outline-offset: 2px; }
+
+.signs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: end; margin-top: 6px; }
+.sig { position: relative; }
+.sig .scrawl { position: absolute; right: 4px; bottom: 30px; font-family: var(--font-hand); color: var(--pen); font-size: 2rem; transform: rotate(-8deg); }
+.stamp {
+  width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--stamp); color: var(--stamp);
+  display: grid; place-items: center; text-align: center; opacity: .75; transform: rotate(-10deg);
+  font-family: var(--font-label); font-size: .6rem; letter-spacing: .14em; line-height: 1.3;
+  box-shadow: inset 0 0 0 6px var(--paper), inset 0 0 0 7px var(--stamp);
+}
+.stamp b { display: block; font-size: 1.9rem; letter-spacing: 0; }
+.code { font-family: var(--font-value); font-size: .7rem; color: var(--label); }
+
+/* RSVP slip */
+.slip {
+  background: var(--paper); box-shadow: 0 18px 44px rgba(0,0,0,.4);
+  border-top: 2px dashed var(--label-soft);
+  padding: clamp(18px, 5vw, 32px); display: grid; gap: 16px; position: relative;
+}
+.slip::before { content: "odreži in vrni"; position: absolute; top: -26px; left: 10px; font-family: var(--font-hand); color: var(--band-dark); font-size: 1.15rem; }
+.slip h2 { margin: 0; font-family: var(--font-title); font-weight: 600; color: var(--title); font-size: 1.9rem; line-height: 1.1; }
+.slip p { margin: 0; max-width: 60ch; }
+.deadline { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+form { display: grid; gap: 14px; }
+.q { display: grid; gap: 4px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.q > span, .q legend { font-family: var(--font-label); font-size: .82rem; color: var(--label); padding: 0; }
+input[type=text], input[type=number], textarea {
+  font: 700 1.05rem var(--font-value); color: var(--ink);
+  background: var(--band); border: 0; padding: 8px 10px; width: 100%; border-radius: 0;
+}
+textarea { resize: vertical; min-height: 64px; font-weight: 400; }
+input[type=number] { width: 7ch; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+label.opt { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1.5px solid var(--band-dark); padding: 8px 12px; font-family: var(--font-label); }
+label.opt input { accent-color: var(--title); margin: 0; }
+label.opt:has(input:checked) { border-color: var(--title); background: var(--band); }
+.result { display: grid; gap: 10px; }
+.msg { white-space: pre-wrap; background: var(--band); padding: 12px; font: .95rem var(--font-value); margin: 0; overflow-wrap: anywhere; }
+.note { font-size: .88rem; color: var(--label); }
+.err { color: #9b2c2c; font-size: .9rem; }
+
+@media (max-width: 560px) {
+  .grades { grid-template-columns: 1fr; }
+  .row { grid-template-columns: 1fr 1fr; }
+  .row .f:last-child { grid-column: 1 / -1; }
+  .row2 { grid-template-columns: 1fr; }
+  .signs { grid-template-columns: 1fr; justify-items: stretch; }
+  .stamp { justify-self: center; order: 3; }
+}
+
+/* Pošiljanje in potrditveni zaslon */
+[hidden] { display: none !important; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.count { font-family: var(--font-label); font-size: .75rem; color: var(--label); justify-self: end; }
+.btn:disabled { opacity: .6; cursor: progress; }
+.btn:disabled:hover { background: var(--title); color: var(--paper); }
+.done { display: grid; gap: 14px; justify-items: start; }
+.done-row { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
+.done .stamp { width: 92px; height: 92px; }
+.done .stamp b { font-size: 1.25rem; letter-spacing: .04em; }
+.done-title { margin: 0; font-family: var(--font-title); font-weight: 600; color: var(--title); font-size: 1.6rem; line-height: 1.15; }
+.done .f { width: 100%; }
+.linkbtn { appearance: none; background: none; border: 0; padding: 0; cursor: pointer; font: 500 .95rem var(--font-label); color: var(--title); text-decoration: underline; text-underline-offset: 4px; }
+.linkbtn:focus-visible { outline: 3px solid var(--pen); outline-offset: 2px; }
+.fallback-note { margin: 0; font-size: .95rem; }
+@media (max-width: 560px) {
+  .done-row { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .done { justify-items: stretch; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <article class="sheet" aria-label="Vabilo na praznovanje 40. rojstnega dne">
+    <div class="topband"></div>
+    <div class="panel">
+      <svg class="emblem" viewBox="0 0 64 76" aria-hidden="true">
+        <path d="M4 4 H60 V40 C60 58 46 68 32 73 C18 68 4 58 4 40 Z" fill="#3a2a33"/>
+        <path d="M9 9 H55 V40 C55 54 44 62 32 67 C20 62 9 54 9 40 Z" fill="#eef8f9"/>
+        <text x="32" y="48" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-weight="600" font-size="30" fill="#3a2a33">40</text>
+        <path d="M14 56 Q23 52 32 56 T50 56" stroke="#3a2a33" stroke-width="2" fill="none"/>
+      </svg>
+      <div class="issuer">OSNOVNA ŠOLA ŽIVLJENJA</div>
+    </div>
+
+    <div class="body">
+      <div class="f center"><div class="v">Osnovna šola življenja</div></div>
+      <div class="f center"><div class="v">Šempeter v Savinjski dolini</div><div class="l">ime in sedež šole</div></div>
+
+      <div>
+        <h1><span class="cap">S</span>pričevalo</h1>
+        <p class="subtitle">o končanem 40. razredu življenja</p>
+      </div>
+
+      <div class="f center name"><div class="v">Nino Kokalj</div><div class="l">ime in priimek</div></div>
+
+      <div class="row">
+        <div class="f"><div class="v">40/2026</div><div class="l">številka vabila</div></div>
+        <div class="f"><div class="v">40. A</div><div class="l">razred, oddelek</div></div>
+        <div class="f"><div class="v">2026/27</div><div class="l">šolsko leto</div></div>
+      </div>
+
+      <h2 class="gh">zaključne ocene pri posameznih predmetih</h2>
+      <div class="grades">
+        <div class="g"><span class="s">ples</span><span class="p">odlično (5)</span></div>
+        <div class="g"><span class="s">planinstvo</span><span class="p">odlično (5)</span></div>
+        <div class="g"><span class="s">gasilstvo</span><span class="p">odlično (5)</span></div>
+        <div class="g"><span class="s">računalništvo</span><span class="p">odlično (5)</span></div>
+        <div class="g"><span class="s">družabne igre</span><span class="p">odlično (5)</span></div>
+        <div class="g"><span class="s">glasbena umetnost</span><span class="p">prav dobro (4)</span></div>
+        <div class="g"><span class="s">zgodnje vstajanje ob vikendih</span><span class="p">zadostno (2)</span></div>
+        <div class="g"><span class="s">sedenje pri miru</span><span class="p">/</span></div>
+      </div>
+
+      <p class="verdict"><u>Napreduje v 41. razred</u> / ne napreduje.</p>
+
+      <section class="event" aria-label="Podatki o praznovanju">
+        <div class="row2">
+          <div class="f"><div class="v">Štumfabrika, Polzela</div><div class="l">kraj podelitve spričeval</div></div>
+          <div class="f"><div class="v">sobota, 14. 11. 2026, ob 19.00</div><div class="l">datum in ura</div></div>
+        </div>
+        <div class="f"><div class="v">Pogostitev ob 20.00: hladni prigrizki in sladki kotiček.</div><div class="l">opombe</div></div>
+        <div class="f"><div class="v">Dobra volja in udobni plesni čevlji.</div><div class="l">domača naloga</div></div>
+        <div class="btn-row">
+          <a class="btn" id="mapLink" href="https://maps.app.goo.gl/9sKPbW7aQ7NCc7wn7" target="_blank" rel="noopener">Odpri zemljevid</a>
+          <a class="btn primary" href="#potrdi">Potrdi udeležbo</a>
+        </div>
+      </section>
+
+      <div class="signs">
+        <div class="sig f"><span class="scrawl">Življenje</span><div class="v">Življenje, prof. izkušenj</div><div class="l">razrednik</div></div>
+        <div class="stamp" aria-hidden="true"><span>OŠ ŽIVLJENJA<b>40</b>ZA ŽUR</span></div>
+        <div class="sig f"><span class="scrawl">Nino</span><div class="v">Nino Kokalj</div><div class="l">slavljenec</div></div>
+      </div>
+      <div class="code">OŠŽ-40-XL-26</div>
+    </div>
+  </article>
+
+  <section class="slip" id="potrdi" aria-labelledby="slip-h">
+    <h2 id="slip-h">Potrdilo o prisotnosti</h2>
+
+    <div class="done" id="done" hidden tabindex="-1">
+      <div class="done-row">
+        <div class="stamp" aria-hidden="true"><span>OŠ ŽIVLJENJA<b id="doneStamp">PREJETO</b>40. RAZRED</span></div>
+        <p class="done-title" id="doneTitle"></p>
+      </div>
+      <div class="f"><div class="v" id="doneSummary"></div><div class="l">tvoj odgovor</div></div>
+      <button class="linkbtn" type="button" id="change">Spremeni odgovor</button>
+    </div>
+
+    <div id="formWrap">
+      <p>Izpolni in pošlji. Potrdi <span class="deadline">do 31. oktobra 2026</span>, da bo dovolj hrane za vse.</p>
+
+      <form id="rsvp" novalidate>
+        <label class="q" for="ime"><span>ime in priimek</span>
+          <input type="text" id="ime" autocomplete="name" placeholder="Tvoje ime" maxlength="80" required>
+        </label>
+
+        <fieldset class="q">
+          <legend>udeležba</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="pride" id="pride-da" value="da" checked> Pridem</label>
+            <label class="opt"><input type="radio" name="pride" id="pride-ne" value="ne"> Žal ne morem</label>
+          </div>
+        </fieldset>
+
+        <label class="q" for="stevilo" id="stevilo-wrap"><span>število oseb (s tabo vred)</span>
+          <input type="number" id="stevilo" min="1" max="10" value="1" inputmode="numeric">
+        </label>
+
+        <fieldset class="q" id="prenocisce-wrap">
+          <legend>potrebuješ prenočišče?</legend>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="spanje" id="spanje-ne" value="ne" checked> Ne</label>
+            <label class="opt"><input type="radio" name="spanje" id="spanje-da" value="da"> Da</label>
+          </div>
+        </fieldset>
+
+        <label class="q" for="opomba"><span>opombe (neobvezno)</span>
+          <textarea id="opomba" placeholder="Komaj čakam!" maxlength="500"></textarea>
+          <span class="count" id="opombaCount" aria-live="polite">0/500</span>
+        </label>
+
+        <div class="hp" aria-hidden="true">
+          <label for="website">Spletna stran</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div><button class="btn primary" type="submit" id="send">Pošlji potrdilo</button></div>
+        <p class="err" id="err" role="alert" hidden></p>
+      </form>
+
+      <div class="result" id="result" hidden>
+        <p class="fallback-note">Pošiljanje tokrat ni uspelo. Kopiraj sporočilo in ga pošlji Ninu, pa bo potrdilo veljalo.</p>
+        <pre class="msg" id="msg"></pre>
+        <div class="btn-row">
+          <button class="btn primary" type="button" id="copy">Kopiraj sporočilo</button>
+          <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Pošlji prek WhatsAppa</a>
+        </div>
+        <p class="note" id="copyNote" aria-live="polite"></p>
+        <p class="note" id="phoneNote" hidden></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  var cfg = window.NINO40 || {};
+  var SCRIPT_URL = (cfg.SCRIPT_URL || "").trim();
+  var PHONE = (cfg.PHONE || "").replace(/\D/g, "");
+  var PHONE_DISPLAY = cfg.PHONE_DISPLAY || "";
+  var STORE_KEY = "nino40-potrdilo";
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("rsvp");
+  var formWrap = $("formWrap");
+  var result = $("result");
+  var msgEl = $("msg");
+  var err = $("err");
+  var wa = $("wa");
+  var note = $("copyNote");
+  var phoneNote = $("phoneNote");
+  var send = $("send");
+  var done = $("done");
+
+  function val(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : "";
+  }
+  function check(name, value) {
+    var el = form.querySelector('input[name="' + name + '"][value="' + value + '"]');
+    if (el) el.checked = true;
+  }
+  function syncVisibility() {
+    var coming = val("pride") === "da";
+    $("stevilo-wrap").hidden = !coming;
+    $("prenocisce-wrap").hidden = !coming;
+  }
+  form.addEventListener("change", syncVisibility);
+  syncVisibility();
+
+  $("opomba").addEventListener("input", function () {
+    $("opombaCount").textContent = this.value.length + "/500";
+  });
+
+  function osebe(n) {
+    if (n === 1) return "1 oseba";
+    if (n === 2) return "2 osebi";
+    if (n === 3 || n === 4) return n + " osebe";
+    return n + " oseb";
+  }
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (x) { return null; }
+  }
+  function save(data) {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (x) {}
+  }
+
+  function collect() {
+    var coming = val("pride") === "da";
+    var n = parseInt($("stevilo").value, 10);
+    if (!(n >= 1)) n = 1;
+    if (n > 10) n = 10;
+    return {
+      ime: $("ime").value.trim(),
+      udelezba: coming ? "da" : "ne",
+      stevilo: coming ? n : 0,
+      prenocisce: coming && val("spanje") === "da" ? "da" : "ne",
+      opombe: $("opomba").value.trim(),
+      website: $("website").value,
+      poslano: new Date().toISOString()
+    };
+  }
+
+  function validate(d) {
+    if (!d.ime) return { el: "ime", text: "Vpiši svoje ime, da bo Nino vedel, kdo prihaja." };
+    if (d.ime.length > 80) return { el: "ime", text: "Ime je predolgo (največ 80 znakov)." };
+    if (d.opombe.length > 500) return { el: "opomba", text: "Opombe so predolge (največ 500 znakov)." };
+    return null;
+  }
+
+  function summary(d) {
+    if (d.udelezba !== "da") return d.ime + ": žal ne more priti";
+    return d.ime + ": pride, " + osebe(d.stevilo) + (d.prenocisce === "da" ? ", s prenočiščem" : "");
+  }
+
+  function messageText(d) {
+    var lines = ["Živjo Nino, potrdilo za 40-letnico (14. 11., Štumfabrika):", "Ime: " + d.ime];
+    if (d.udelezba === "da") {
+      lines.push("Udeležba: pridem, " + osebe(d.stevilo));
+      lines.push("Prenočišče: " + (d.prenocisce === "da" ? "da, potrebujem" : "ne"));
+    } else {
+      lines.push("Udeležba: žal ne morem priti");
+    }
+    if (d.opombe) lines.push("Opombe: " + d.opombe);
+    return lines.join("\n");
+  }
+
+  function showDone(d, moveFocus) {
+    var coming = d.udelezba === "da";
+    $("doneTitle").textContent = coming ? "Potrdilo prejeto. Se vidimo 14. novembra!" : "Škoda, hvala za odgovor.";
+    $("doneStamp").textContent = coming ? "PRIDE" : "PREJETO";
+    $("doneSummary").textContent = summary(d);
+    formWrap.hidden = true;
+    done.hidden = false;
+    if (moveFocus) done.focus();
+  }
+
+  function showForm() {
+    done.hidden = true;
+    formWrap.hidden = false;
+    result.hidden = true;
+    form.hidden = false;
+    $("ime").focus();
+  }
+
+  function fill(d) {
+    $("ime").value = d.ime || "";
+    check("pride", d.udelezba === "ne" ? "ne" : "da");
+    $("stevilo").value = d.stevilo >= 1 ? d.stevilo : 1;
+    check("spanje", d.prenocisce === "da" ? "da" : "ne");
+    $("opomba").value = d.opombe || "";
+    $("opombaCount").textContent = $("opomba").value.length + "/500";
+    syncVisibility();
+  }
+
+  function showFallback(d) {
+    var text = messageText(d);
+    msgEl.textContent = text;
+    wa.href = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(text);
+    note.textContent = "";
+    if (PHONE_DISPLAY) {
+      phoneNote.hidden = false;
+      phoneNote.textContent = "Ninova številka za SMS: " + PHONE_DISPLAY;
+    }
+    form.hidden = true;
+    result.hidden = false;
+    result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function post(d) {
+    if (!SCRIPT_URL) return Promise.reject(new Error("no_url"));
+    var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 15000) : null;
+    return fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(d),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (r) {
+      if (!r.ok) throw new Error("http_" + r.status);
+      return r.json();
+    }).then(function (j) {
+      if (!j || j.ok !== true) throw new Error((j && j.error) || "bad_response");
+      return j;
+    }).finally(function () { if (timer) clearTimeout(timer); });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var d = collect();
+    var problem = validate(d);
+    if (problem) {
+      err.textContent = problem.text;
+      err.hidden = false;
+      $(problem.el).focus();
+      return;
+    }
+    err.hidden = true;
+    send.disabled = true;
+    send.textContent = "Pošiljam ...";
+
+    post(d).then(function () {
+      save({ ime: d.ime, udelezba: d.udelezba, stevilo: d.stevilo, prenocisce: d.prenocisce, opombe: d.opombe });
+      showDone(d, true);
+    }, function () {
+      showFallback(d);
+    }).then(function () {
+      send.disabled = false;
+      send.textContent = "Pošlji potrdilo";
+    });
+  });
+
+  $("change").addEventListener("click", showForm);
+
+  $("copy").addEventListener("click", function () {
+    var text = msgEl.textContent;
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(msgEl);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      note.textContent = "Besedilo je označeno, kopiraj ga ročno.";
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () {
+        note.textContent = "Kopirano. Prilepi ga v SMS ali sporočilo Ninu.";
+      }, fallback);
+    } catch (x) { fallback(); }
+  });
+
+  var saved = load();
+  if (saved && saved.ime) {
+    fill(saved);
+    showDone(saved, false);
+  }
+})();
+</script>
+</body>
+</html>
