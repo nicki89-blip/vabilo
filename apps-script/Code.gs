@@ -74,6 +74,28 @@ function doPost(e) {
   return json_({ ok: true });
 }
 
+// Tabele z evropskimi nastavitvami (npr. slovenskimi) v formulah zahtevajo podpičje namesto vejice.
+// Preizkusimo na pomožni celici, nato po potrebi zamenjamo vejice zunaj narekovajev.
+function separator_(sheet) {
+  var cell = sheet.getRange("Z1");
+  cell.setFormula("=SUM(1,2)");
+  SpreadsheetApp.flush();
+  var ok = cell.getValue() === 3;
+  cell.clearContent();
+  return ok ? "," : ";";
+}
+
+function formula_(f, sep) {
+  if (sep === ",") return f;
+  var out = "", inStr = false;
+  for (var i = 0; i < f.length; i++) {
+    var c = f.charAt(i);
+    if (c === '"') inStr = !inStr;
+    out += (c === "," && !inStr) ? sep : c;
+  }
+  return out;
+}
+
 /**
  * Zaženi enkrat. Ustvari zavihke, glave in formule. Ponovni zagon ne briše odgovorov.
  */
@@ -96,6 +118,7 @@ function setup() {
   // Povzetek
   var pov = ss.getSheetByName(SHEET_POVZETEK) || ss.insertSheet(SHEET_POVZETEK, 1);
   pov.clear();
+  var sep = separator_(pov);
   pov.getRange("A1").setValue("Povzetek potrditev (velja zadnji odgovor po imenu)").setFontWeight("bold").setFontSize(13);
   pov.getRange("A3:A7").setValues([
     ["Skupaj oseb, ki pridejo"],
@@ -104,11 +127,11 @@ function setup() {
     ["Potrditve s prenočiščem"],
     ["Zadnji odgovor"]
   ]);
-  pov.getRange("B3").setFormula('=SUMIFS(D11:D, C11:C, "da")');
-  pov.getRange("B4").setFormula('=COUNTIFS(C11:C, "da")');
-  pov.getRange("B5").setFormula('=COUNTIFS(C11:C, "ne")');
-  pov.getRange("B6").setFormula('=COUNTIFS(C11:C, "da", E11:E, "da")');
-  pov.getRange("B7").setFormula('=IF(COUNT(Odgovori!A2:A) = 0, "", MAX(Odgovori!A2:A))').setNumberFormat("d. m. yyyy hh:mm");
+  pov.getRange("B3").setFormula(formula_('=SUMIFS(D11:D, C11:C, "da")', sep));
+  pov.getRange("B4").setFormula(formula_('=COUNTIFS(C11:C, "da")', sep));
+  pov.getRange("B5").setFormula(formula_('=COUNTIFS(C11:C, "ne")', sep));
+  pov.getRange("B6").setFormula(formula_('=COUNTIFS(C11:C, "da", E11:E, "da")', sep));
+  pov.getRange("B7").setFormula(formula_('=IF(COUNT(Odgovori!A2:A) = 0, "", MAX(Odgovori!A2:A))', sep)).setNumberFormat("d. m. yyyy hh:mm");
   pov.getRange("B3:B7").setFontWeight("bold").setHorizontalAlignment("left");
 
   pov.getRange("A9").setValue("Zadnji odgovori, ena vrstica na ime").setFontWeight("bold");
@@ -116,11 +139,10 @@ function setup() {
   // Za vsako normalizirano ime (male črke, brez presledkov na robovih) poišče zadnjo vrstico v Odgovori
   // (odgovori se dodajajo po vrsti, zato je zadnja vrstica najnovejši odgovor) in jih razvrsti po imenu.
   pov.getRange("A11").setFormula(
-    '=IFERROR(LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
+    formula_('=IFERROR(LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
     'k, UNIQUE(FILTER(n, n <> "")), ' +
     'r, MAP(k, LAMBDA(x, XMATCH(x, n, 0, -1))), ' +
-    'SORT(FILTER(Odgovori!A2:F, ARRAYFORMULA(ISNUMBER(MATCH(SEQUENCE(ROWS(n)), r, 0)))), 2, TRUE)), "")'
-  );
+    'SORT(FILTER(Odgovori!A2:F, ARRAYFORMULA(ISNUMBER(MATCH(SEQUENCE(ROWS(n)), r, 0)))), 2, TRUE)), "")', sep));
   pov.getRange("A11:A").setNumberFormat("d. m. yyyy hh:mm");
   pov.setColumnWidth(1, 220);
   pov.setColumnWidth(2, 180);
@@ -133,12 +155,11 @@ function setup() {
   pv.setFrozenRows(1);
   pv.getRange("B2:B").clearContent();
   pv.getRange("B2").setFormula(
-    '=LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
+    formula_('=LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
     'MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", LET(' +
     'u, XLOOKUP(LOWER(TRIM(x)), n, Odgovori!C2:C, "", 0, -1), ' +
     's, XLOOKUP(LOWER(TRIM(x)), n, Odgovori!D2:D, 0, 0, -1), ' +
-    'IF(u = "da", "pride (" & s & ")", IF(u = "ne", "ne pride", "ni odgovora")))))))'
-  );
+    'IF(u = "da", "pride (" & s & ")", IF(u = "ne", "ne pride", "ni odgovora")))))))', sep));
   pv.setColumnWidth(1, 220);
   pv.setColumnWidth(2, 160);
   var rule = SpreadsheetApp.newConditionalFormatRule()
