@@ -80,7 +80,7 @@ function doPost(e) {
 function setup() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   ss.setSpreadsheetTimeZone("Europe/Ljubljana");
-  ss.setSpreadsheetLocale("sl_SI");
+  // Jezikovnih nastavitev tabele namenoma ne spreminjamo: formule so zapisane z vejicami.
 
   // Odgovori
   var odg = ss.getSheetByName(SHEET_ODGOVORI) || ss.insertSheet(SHEET_ODGOVORI, 0);
