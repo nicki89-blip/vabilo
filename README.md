@@ -2,7 +2,7 @@
 
 Spletno vabilo v obliki spričevala. Gostje na njem potrdijo udeležbo, vsaka potrditev pa se zapiše kot nova vrstica v Google tabelo.
 
-Povezava za goste: https://nicki89-blip.github.io/nino40/
+Povezava za goste: https://nicki89-blip.github.io/vabilo/
 
 ## Datoteke
 
