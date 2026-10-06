@@ -9,7 +9,7 @@ Povezava za goste: https://nicki89-blip.github.io/vabilo/
 - `index.html`: vabilo in obrazec za potrditev.
 - `config.js`: edina datoteka z nastavitvami (`SCRIPT_URL`, telefonska številka za rezervni način).
 - `apps-script/Code.gs`: koda za Google tabelo. Tukaj je samo za referenco, v tabelo jo prilepiš ročno.
-- `og-image.png`: slika, ki se pokaže v predogledu povezave (WhatsApp, Messenger).
+- `og-image-v2.png`: slika, ki se pokaže v predogledu povezave (WhatsApp, Messenger).
 - `robots.txt`: iskalnikom prepove indeksiranje.
 
 ## Postavitev tabele (enkrat)
