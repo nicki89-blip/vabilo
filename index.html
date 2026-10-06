@@ -76,14 +76,9 @@ body {
 .f .v {
   position: relative;
   background: linear-gradient(90deg, transparent, var(--band) 12%, var(--band) 92%, transparent);
-  padding: 4px 10px 4px 26px; font-weight: 700; min-height: 1.9em; min-width: 0; overflow-wrap: anywhere;
+  padding: 4px 12px; font-weight: 700; min-height: 1.9em; min-width: 0; overflow-wrap: anywhere;
 }
-.f .v::before {
-  content: ""; position: absolute; left: 6px; top: 50%; width: 9px; height: 18px;
-  border-right: 1.5px solid var(--label-soft); border-top: 1.5px solid transparent;
-  transform: translateY(-50%) skewX(18deg);
-}
-.f .l { font-family: var(--font-label); font-size: .78rem; color: var(--label); padding-left: 26px; }
+.f .l { font-family: var(--font-label); font-size: .78rem; color: var(--label); padding-left: 12px; }
 .f.center .v { text-align: center; }
 .row { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
 
