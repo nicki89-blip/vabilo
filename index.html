@@ -361,6 +361,18 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
     try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (x) {}
   }
 
+  // Naključna oznaka tega brskalnika, da popravljen odgovor zamenja prejšnjega, tudi če gost popravi ime.
+  var browserId = (function () {
+    var id = "";
+    try { id = localStorage.getItem("nino40-id") || ""; } catch (x) {}
+    if (!/^[A-Za-z0-9-]{8,40}$/.test(id)) {
+      id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+        : "id-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+      try { localStorage.setItem("nino40-id", id); } catch (x) {}
+    }
+    return id;
+  })();
+
   function collect() {
     var n = parseInt(val("pride"), 10);
     if (n !== 1 && n !== 0) n = 2;
@@ -372,7 +384,8 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
       prenocisce: coming && val("spanje") === "da" ? "da" : "ne",
       opombe: $("opomba").value.trim(),
       website: $("website").value,
-      poslano: new Date().toISOString()
+      poslano: new Date().toISOString(),
+      id: browserId
     };
   }
 

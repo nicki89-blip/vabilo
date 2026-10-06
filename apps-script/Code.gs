@@ -9,7 +9,7 @@
 var SHEET_ODGOVORI = "Odgovori";
 var SHEET_POVZETEK = "Povzetek";
 var SHEET_POVABLJENI = "Povabljeni";
-var HEADER = ["Čas prejema", "Ime", "Udeležba", "Število oseb", "Prenočišče", "Opombe", "Čas v brskalniku"];
+var HEADER = ["Čas prejema", "Ime", "Udeležba", "Število oseb", "Prenočišče", "Opombe", "Čas v brskalniku", "ID"];
 
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
@@ -55,6 +55,8 @@ function doPost(e) {
   var prenocisce = udelezba === "da" ? yesNo_(data.prenocisce) : "ne";
   var opombe = clean_(data.opombe, 500);
   var poslano = clean_(data.poslano, 40);
+  // Naključna oznaka brskalnika: popravek odgovora iz istega brskalnika zamenja prejšnjega, tudi če se ime spremeni.
+  var id = /^[A-Za-z0-9-]{8,40}$/.test(String(data.id || "")) ? String(data.id) : "";
 
   var lock = LockService.getScriptLock();
   try {
@@ -65,7 +67,7 @@ function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_ODGOVORI);
     if (!sheet) return json_({ ok: false, error: "no_sheet" });
-    sheet.appendRow([new Date(), ime, udelezba, stevilo, prenocisce, opombe, poslano]);
+    sheet.appendRow([new Date(), ime, udelezba, stevilo, prenocisce, opombe, poslano, id]);
   } catch (err) {
     return json_({ ok: false, error: "write_failed" });
   } finally {
@@ -110,7 +112,7 @@ function setup() {
   odg.setFrozenRows(1);
   odg.getRange("A:A").setNumberFormat("d. m. yyyy hh:mm");
   odg.getRange("B:B").setNumberFormat("@");
-  odg.getRange("F:G").setNumberFormat("@");
+  odg.getRange("F:H").setNumberFormat("@");
   odg.setColumnWidth(1, 140);
   odg.setColumnWidth(2, 180);
   odg.setColumnWidth(6, 320);
@@ -136,13 +138,13 @@ function setup() {
 
   pov.getRange("A9").setValue("Zadnji odgovori, ena vrstica na ime").setFontWeight("bold");
   pov.getRange(10, 1, 1, 6).setValues([HEADER.slice(0, 6)]).setFontWeight("bold").setBackground("#d4e6e8");
-  // Za vsako normalizirano ime (male črke, brez presledkov na robovih) poišče zadnjo vrstico v Odgovori
-  // (odgovori se dodajajo po vrsti, zato je zadnja vrstica najnovejši odgovor) in jih razvrsti po imenu.
-  pov.getRange("A11").setFormula(
-    formula_('=IFERROR(LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
-    'k, UNIQUE(FILTER(n, n <> "")), ' +
-    'r, MAP(k, LAMBDA(x, XMATCH(x, n, 0, -1))), ' +
-    'SORT(FILTER(Odgovori!A2:F, ARRAYFORMULA(ISNUMBER(MATCH(SEQUENCE(ROWS(n)), r, 0)))), 2, TRUE)), "")', sep));
+  // Odgovore združi po oznaki brskalnika (stolpec ID); če je ni, po normaliziranem imenu (male črke, brez presledkov na robovih).
+  // Za vsako skupino vzame zadnjo vrstico (odgovori se dodajajo po vrsti) in jih razvrsti po imenu.
+  pov.getRange("A11").setFormula(formula_(
+    '=IFERROR(LET(kk, ARRAYFORMULA(IF(Odgovori!H2:H <> "", Odgovori!H2:H, LOWER(TRIM(Odgovori!B2:B)))), ' +
+    'k, UNIQUE(FILTER(kk, Odgovori!B2:B <> "")), ' +
+    'r, MAP(k, LAMBDA(x, XMATCH(x, kk, 0, -1))), ' +
+    'SORT(FILTER(Odgovori!A2:F, ARRAYFORMULA(ISNUMBER(MATCH(SEQUENCE(ROWS(kk)), r, 0)))), 2, TRUE)), "")', sep));
   pov.getRange("A11:A").setNumberFormat("d. m. yyyy hh:mm");
   pov.setColumnWidth(1, 220);
   pov.setColumnWidth(2, 180);
@@ -154,11 +156,14 @@ function setup() {
   pv.getRange("A1:B1").setValues([["Ime", "Status"]]).setFontWeight("bold").setBackground("#d4e6e8");
   pv.setFrozenRows(1);
   pv.getRange("B2:B").clearContent();
-  pv.getRange("B2").setFormula(
-    formula_('=LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
+  // Ime poišče v zadnjem odgovoru s tem imenom, nato status vzame iz najnovejšega odgovora iste skupine (ID ali ime).
+  pv.getRange("B2").setFormula(formula_(
+    '=LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
+    'kk, ARRAYFORMULA(IF(Odgovori!H2:H <> "", Odgovori!H2:H, n)), ' +
     'MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", LET(' +
-    'u, XLOOKUP(LOWER(TRIM(x)), n, Odgovori!C2:C, "", 0, -1), ' +
-    's, XLOOKUP(LOWER(TRIM(x)), n, Odgovori!D2:D, 0, 0, -1), ' +
+    'g, XLOOKUP(LOWER(TRIM(x)), n, kk, "", 0, -1), ' +
+    'u, IF(g = "", "", XLOOKUP(g, kk, Odgovori!C2:C, "", 0, -1)), ' +
+    's, IF(g = "", 0, XLOOKUP(g, kk, Odgovori!D2:D, 0, 0, -1)), ' +
     'IF(u = "da", "pride (" & s & ")", IF(u = "ne", "ne pride", "ni odgovora")))))))', sep));
   pv.setColumnWidth(1, 220);
   pv.setColumnWidth(2, 160);
