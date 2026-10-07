@@ -175,6 +175,17 @@ function setup() {
   pv.getRange("C2").setFormula(formula_(
     '=MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", "https://nicki89-blip.github.io/vabilo/?za=" & ENCODEURL(TRIM(x)))))', sep));
   pv.setColumnWidth(3, 420);
+  // Besedilo vabila za WhatsApp z osebno povezavo. V stolpec E (Jezik) vpiši "en" za angleško različico.
+  pv.getRange("D1:E1").setValues([["Vabilo", "Jezik"]]).setFontWeight("bold").setBackground("#d4e6e8");
+  pv.getRange("D2:D").clearContent();
+  pv.getRange("D2").setFormula(formula_(
+    '=MAP(A2:A, E2:E, LAMBDA(x, j, IF(TRIM(x) = "", "", LET(' +
+    'p, "https://nicki89-blip.github.io/vabilo/?za=" & ENCODEURL(TRIM(x)), ' +
+    'IF(LOWER(TRIM(j)) = "en", ' +
+    '"Hi!" & CHAR(10) & CHAR(10) & "I\'m celebrating my 40th and I\'d love for you to join the celebration. All the details are in the invitation below." & CHAR(10) & p & CHAR(10) & CHAR(10) & "See you there!" & CHAR(10) & "Nino", ' +
+    '"Živjo! 14. 11. ob 19.00 praznujem svojih 40 v Štumfabriki na Polzeli in res bi bil vesel, če prideta 🥂 Vabilo in potrditev do 31. 10. prosim: " & p)))))', sep));
+  pv.setColumnWidth(4, 360);
+  pv.setColumnWidth(5, 70);
   pv.setColumnWidth(1, 220);
   pv.setColumnWidth(2, 160);
   var rule = SpreadsheetApp.newConditionalFormatRule()
@@ -183,8 +194,7 @@ function setup() {
     .setRanges([pv.getRange("B2:B")])
     .build();
   pv.setConditionalFormatRules([rule]);
-  pv.getRange("D1").clearContent();
-  pv.getRange("E1").setValue("Vsakemu paru pošlji njegovo osebno povezavo (stolpec C). Ime v stolpcu A po pošiljanju ne spreminjaj, sicer se povezava ne ujema več.").setFontStyle("italic").setFontColor("#5c7276");
+  pv.getRange("F1").setValue("Vsakemu paru pošlji njegovo osebno povezavo (stolpec C). Ime v stolpcu A po pošiljanju ne spreminjaj, sicer se povezava ne ujema več.").setFontStyle("italic").setFontColor("#5c7276");
 
   var def = ss.getSheetByName("Sheet1") || ss.getSheetByName("List1");
   if (def && def.getLastRow() === 0 && ss.getSheets().length > 3) ss.deleteSheet(def);
