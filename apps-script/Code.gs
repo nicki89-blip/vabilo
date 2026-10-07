@@ -162,10 +162,10 @@ function setup() {
     '=LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
     'kk, ARRAYFORMULA(IF(Odgovori!H2:H <> "", Odgovori!H2:H, n)), ' +
     'MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", LET(' +
-    'sl, "gost-" & REGEXREPLACE(LEFT(REGEXREPLACE(REGEXREPLACE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(' +
+    'kljuc, "gost-" & REGEXREPLACE(LEFT(REGEXREPLACE(REGEXREPLACE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(' +
     'LOWER(TRIM(x)), "č", "c"), "š", "s"), "ž", "z"), "ć", "c"), "đ", "d"), "[^a-z0-9]+", "-"), "^-+|-+$", ""), 35), "-+$", ""), ' +
-    'g0, XLOOKUP(LOWER(TRIM(x)), n, kk, "", 0, -1), ' +
-    'g, IF(COUNTIF(Odgovori!H2:H, sl) > 0, sl, g0), ' +
+    'poimenu, XLOOKUP(LOWER(TRIM(x)), n, kk, "", 0, -1), ' +
+    'g, IF(COUNTIF(Odgovori!H2:H, kljuc) > 0, kljuc, poimenu), ' +
     'u, IF(g = "", "", XLOOKUP(g, kk, Odgovori!C2:C, "", 0, -1)), ' +
     's, IF(g = "", 0, XLOOKUP(g, kk, Odgovori!D2:D, 0, 0, -1)), ' +
     'IF(u = "da", "pride (" & s & ")", IF(u = "ne", "ne pride", "ni odgovora")))))))', sep));
