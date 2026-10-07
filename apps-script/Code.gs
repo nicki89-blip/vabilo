@@ -156,15 +156,25 @@ function setup() {
   pv.getRange("A1:B1").setValues([["Ime", "Status"]]).setFontWeight("bold").setBackground("#d4e6e8");
   pv.setFrozenRows(1);
   pv.getRange("B2:B").clearContent();
-  // Ime poišče v zadnjem odgovoru s tem imenom, nato status vzame iz najnovejšega odgovora iste skupine (ID ali ime).
+  // Status: najprej po osebni povezavi (ID "gost-..." iz imena, enako kot slug() na strani),
+  // sicer po imenu v zadnjem odgovoru in nato po najnovejšem odgovoru iste skupine.
   pv.getRange("B2").setFormula(formula_(
     '=LET(n, ARRAYFORMULA(LOWER(TRIM(Odgovori!B2:B))), ' +
     'kk, ARRAYFORMULA(IF(Odgovori!H2:H <> "", Odgovori!H2:H, n)), ' +
     'MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", LET(' +
-    'g, XLOOKUP(LOWER(TRIM(x)), n, kk, "", 0, -1), ' +
+    'sl, "gost-" & REGEXREPLACE(LEFT(REGEXREPLACE(REGEXREPLACE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(' +
+    'LOWER(TRIM(x)), "č", "c"), "š", "s"), "ž", "z"), "ć", "c"), "đ", "d"), "[^a-z0-9]+", "-"), "^-+|-+$", ""), 35), "-+$", ""), ' +
+    'g0, XLOOKUP(LOWER(TRIM(x)), n, kk, "", 0, -1), ' +
+    'g, IF(COUNTIF(Odgovori!H2:H, sl) > 0, sl, g0), ' +
     'u, IF(g = "", "", XLOOKUP(g, kk, Odgovori!C2:C, "", 0, -1)), ' +
     's, IF(g = "", 0, XLOOKUP(g, kk, Odgovori!D2:D, 0, 0, -1)), ' +
     'IF(u = "da", "pride (" & s & ")", IF(u = "ne", "ne pride", "ni odgovora")))))))', sep));
+  // Osebna povezava za vsak par: pošlji jo obema partnerjema.
+  pv.getRange("C1").setValue("Osebna povezava").setFontWeight("bold").setBackground("#d4e6e8");
+  pv.getRange("C2:C").clearContent();
+  pv.getRange("C2").setFormula(formula_(
+    '=MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", "https://nicki89-blip.github.io/vabilo/?za=" & ENCODEURL(TRIM(x)))))', sep));
+  pv.setColumnWidth(3, 420);
   pv.setColumnWidth(1, 220);
   pv.setColumnWidth(2, 160);
   var rule = SpreadsheetApp.newConditionalFormatRule()
@@ -173,7 +183,8 @@ function setup() {
     .setRanges([pv.getRange("B2:B")])
     .build();
   pv.setConditionalFormatRules([rule]);
-  pv.getRange("D1").setValue("Ime vpiši tako, kot ga je gost vpisal na vabilu. Velike črke in presledki na robovih niso pomembni, drugi zapis (npr. vzdevek) pa je.").setFontStyle("italic").setFontColor("#5c7276");
+  pv.getRange("D1").clearContent();
+  pv.getRange("E1").setValue("Vsakemu paru pošlji njegovo osebno povezavo (stolpec C). Ime v stolpcu A po pošiljanju ne spreminjaj, sicer se povezava ne ujema več.").setFontStyle("italic").setFontColor("#5c7276");
 
   var def = ss.getSheetByName("Sheet1") || ss.getSheetByName("List1");
   if (def && def.getLastRow() === 0 && ss.getSheets().length > 3) ss.deleteSheet(def);

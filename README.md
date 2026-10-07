@@ -33,6 +33,7 @@ V urejevalniku Apps Script zaženi `dodajTestnePodatke`. V zavihku Povzetek mora
 - **Odgovori**: vsaka oddana potrditev, tudi podvojene. Tega ne urejaj ročno, razen za brisanje testnih vrstic.
 - **Povzetek**: velja zadnji odgovor po imenu (velike črke in presledki na robovih se ne upoštevajo). Prikaže skupno število oseb, odpovedi, prenočišča in čas zadnjega odgovora. Osveži se sam.
 - **Povabljeni**: v stolpec A vpiši imena povabljenih, stolpec B sam pokaže »pride (2)«, »ne pride« ali »ni odgovora« (rumeno).
+  Stolpec C pokaže osebno povezavo za vsak par (`?za=Ime in Ime Priimek`). Pošlji jo obema partnerjema: ime je na obrazcu že vpisano in če odgovorita oba, se upošteva samo zadnji odgovor. Imena v stolpcu A po pošiljanju ne spreminjaj.
 
 Vabilo je za pare, zato gostje vpišejo obe imeni (npr. »Ana in Marko Novak«), število oseb je 2, 1 ali 0. Ujemanje imen se zanaša na enak zapis. Če se je gost vpisal drugače (npr. »Miha« namesto »Mihael Novak«), popravi ime v zavihku Povabljeni, da se ujema z zapisom v Odgovorih.
 

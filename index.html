@@ -264,6 +264,7 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
 
     <div id="formWrap">
       <p>Izpolnita in pošljita. Potrdita <span class="deadline">do 31. oktobra 2026</span>, da bo dovolj hrane in pijače za vse.</p>
+      <p class="note" id="zaNote" hidden>Potrdilo velja za oba, dovolj je, da odgovori eden od vaju.</p>
 
       <form id="rsvp" novalidate>
         <label class="q" for="ime"><span>vajini imeni</span>
@@ -322,7 +323,16 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   var SCRIPT_URL = (cfg.SCRIPT_URL || "").trim();
   var PHONE = (cfg.PHONE || "").replace(/\D/g, "");
   var PHONE_DISPLAY = cfg.PHONE_DISPLAY || "";
-  var STORE_KEY = "nino40-potrdilo";
+  // Osebna povezava (?za=Ime in Ime Priimek): oba partnerja dobita isto povezavo, zato se njuna odgovora štejeta kot en par.
+  var guestName = "";
+  try { guestName = (new URLSearchParams(location.search).get("za") || "").trim().slice(0, 80); } catch (x) {}
+  // Mora se ujemati s formulo v listu Povabljeni (apps-script/Code.gs).
+  function slug(t) {
+    t = t.trim().toLowerCase().replace(/č/g, "c").replace(/š/g, "s").replace(/ž/g, "z").replace(/ć/g, "c").replace(/đ/g, "d");
+    return t.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 35).replace(/-+$/, "");
+  }
+  var guestKey = guestName && slug(guestName) ? "gost-" + slug(guestName) : "";
+  var STORE_KEY = guestKey ? "nino40-potrdilo-" + guestKey : "nino40-potrdilo";
 
   var $ = function (id) { return document.getElementById(id); };
   var form = $("rsvp");
@@ -362,7 +372,7 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   }
 
   // Naključna oznaka tega brskalnika, da popravljen odgovor zamenja prejšnjega, tudi če gost popravi ime.
-  var browserId = (function () {
+  var browserId = guestKey || (function () {
     var id = "";
     try { id = localStorage.getItem("nino40-id") || ""; } catch (x) {}
     if (!/^[A-Za-z0-9-]{8,40}$/.test(id)) {
@@ -516,7 +526,10 @@ label.opt:has(input:checked) { border-color: var(--title); background: var(--ban
   if (saved && saved.ime) {
     fill(saved);
     showDone(saved, false);
+  } else if (guestName) {
+    $("ime").value = guestName;
   }
+  if (guestName) $("zaNote").hidden = false;
 })();
 </script>
 </body>
