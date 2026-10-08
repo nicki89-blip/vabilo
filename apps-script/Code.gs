@@ -183,7 +183,10 @@ function setup() {
     'p, "https://nicki89-blip.github.io/vabilo/?za=" & ENCODEURL(TRIM(x)), ' +
     'IF(LOWER(TRIM(j)) = "en", ' +
     '"Hi!" & CHAR(10) & CHAR(10) & "I\'m celebrating my 40th and I\'d love for you to join the celebration. All the details are in the invitation below." & CHAR(10) & p & CHAR(10) & CHAR(10) & "See you there!" & CHAR(10) & "Nino", ' +
-    '"Živjo! 14. 11. ob 19.00 praznujem svojih 40 v Štumfabriki na Polzeli in res bi bil vesel, če prideta 🥂 Vabilo in potrditev do 31. 10. prosim: " & p)))))', sep));
+    '"Živjo! 14.11 ob 19.00 praznujem svojih 40 v Štumfabriki na Polzeli in res bi bil vesel, če prideta! 🥂" & CHAR(10) & ' +
+    '"Tokrat brez otrok – čaka nas večer za odrasle. 😉" & CHAR(10) & ' +
+    '"Vabilo in potrditev prosim do 31. 10.:" & CHAR(10) & p & CHAR(10) & ' +
+    '"Vsak gost ima svojo povezavo – tale je vajina. 😊")))))', sep));
   pv.setColumnWidth(4, 360);
   pv.setColumnWidth(5, 70);
   pv.setColumnWidth(1, 220);
