@@ -173,20 +173,20 @@ function setup() {
   pv.getRange("C1").setValue("Osebna povezava").setFontWeight("bold").setBackground("#d4e6e8");
   pv.getRange("C2:C").clearContent();
   pv.getRange("C2").setFormula(formula_(
-    '=MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", "https://nicki89-blip.github.io/vabilo/?za=" & ENCODEURL(TRIM(x)))))', sep));
+    '=MAP(A2:A, LAMBDA(x, IF(TRIM(x) = "", "", "https://nicki89-blip.github.io/vabilo/?za=" & SUBSTITUTE(ENCODEURL(TRIM(x)), "%20", "+"))))', sep));
   pv.setColumnWidth(3, 420);
   // Besedilo vabila za WhatsApp z osebno povezavo. V stolpec E (Jezik) vpiši "en" za angleško različico.
   pv.getRange("D1:E1").setValues([["Vabilo", "Jezik"]]).setFontWeight("bold").setBackground("#d4e6e8");
   pv.getRange("D2:D").clearContent();
   pv.getRange("D2").setFormula(formula_(
     '=MAP(A2:A, E2:E, LAMBDA(x, j, IF(TRIM(x) = "", "", LET(' +
-    'p, "https://nicki89-blip.github.io/vabilo/?za=" & ENCODEURL(TRIM(x)), ' +
+    'p, "https://nicki89-blip.github.io/vabilo/?za=" & SUBSTITUTE(ENCODEURL(TRIM(x)), "%20", "+"), ' +
     'IF(LOWER(TRIM(j)) = "en", ' +
     '"Hi!" & CHAR(10) & CHAR(10) & "I\'m celebrating my 40th and I\'d love for you to join the celebration. All the details are in the invitation below." & CHAR(10) & p & CHAR(10) & CHAR(10) & "See you there!" & CHAR(10) & "Nino", ' +
     '"Živjo!" & CHAR(10) & CHAR(10) & ' +
     '"14. 11. ob 19.00 praznujem svojih 40 v Štumfabriki na Polzeli in res bi bil vesel, če prideta! 🥂" & CHAR(10) & ' +
     '"Tokrat brez otrok, čaka nas večer za odrasle. 😉" & CHAR(10) & CHAR(10) & ' +
-    '"Vabilo in potrditev prosim do 31. 10.:" & CHAR(10) & p & CHAR(10) & CHAR(10) & ' +
+    '"Vabilo je na povezavi, udeležbo prosim potrdita do 31. 10.:" & CHAR(10) & p & CHAR(10) & CHAR(10) & ' +
     '"Vsak gost ima svojo povezavo – tale je vajina. 😊")))))', sep));
   pv.setColumnWidth(4, 360);
   pv.setColumnWidth(5, 70);
