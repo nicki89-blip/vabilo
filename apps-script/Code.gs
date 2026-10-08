@@ -198,7 +198,14 @@ function setup() {
     .setRanges([pv.getRange("B2:B")])
     .build();
   pv.setConditionalFormatRules([rule]);
-  pv.getRange("F1").setValue("Vsakemu paru pošlji njegovo osebno povezavo (stolpec C). Ime v stolpcu A po pošiljanju ne spreminjaj, sicer se povezava ne ujema več.").setFontStyle("italic").setFontColor("#5c7276");
+  // Poslano: kljukice, ki jih označiš ročno. Ustvari jih samo prvič, da ponovni zagon setup ne izbriše oznak.
+  if (pv.getRange("F1").getValue() !== "Poslano") {
+    pv.getRange("F2:F" + pv.getMaxRows()).clearContent().insertCheckboxes();
+  }
+  pv.getRange("F1").setValue("Poslano");
+  pv.getRange("A1:F1").setFontWeight("bold").setFontStyle("normal").setFontColor("#1f2324").setBackground("#d4e6e8");
+  pv.setColumnWidth(6, 80);
+  pv.getRange("G1").setValue("Vsakemu paru pošlji njegovo osebno povezavo (stolpec C). Ime v stolpcu A po pošiljanju ne spreminjaj, sicer se povezava ne ujema več.").setFontStyle("italic").setFontColor("#5c7276");
 
   var def = ss.getSheetByName("Sheet1") || ss.getSheetByName("List1");
   if (def && def.getLastRow() === 0 && ss.getSheets().length > 3) ss.deleteSheet(def);
